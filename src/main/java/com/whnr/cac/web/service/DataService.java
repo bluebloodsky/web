@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.whnr.cac.database.BtbSubdevice;
+import com.whnr.cac.database.BtbSubdeviceDAO;
 import com.whnr.cac.database.BtbSubstation;
 import com.whnr.cac.database.BtbSubstationdevice;
 import com.whnr.cac.database.BtbSubstationdeviceDAO;
+import com.whnr.cac.database.TDevicetype;
 import com.whnr.cac.database.TbCominfo;
 import com.whnr.cac.database.TbCominfoDAO;
 import com.whnr.cac.web.model.ComponentModel;
@@ -47,15 +48,16 @@ public class DataService {
 				for(BtbSubstationdevice device : substation.getBtbSubstationdevices())
 				{
 					TreeNodeModel deviceNode =new TreeNodeModel(device.getDeviceName());
+					TDevicetype deviceType = device.getTDevicetype();
 					deviceNode.setHref("../data/dataMain.html?deviceType="
-							+device.getTDevicetype().getDeviceTypeName()
+							+ deviceType.getDeviceTypeName()
 							+"&deviceId="+device.getSubstationDeviceId());
 					boolean parentExist=false;
 					if(substationNode.hasChildren())
 					{
 						for(TreeNodeModel childNode:substationNode.getChildren())//设备类型
 						{
-							if(childNode.getText().equals(device.getTDevicetype().getDeviceTypeDesc()))
+							if(childNode.getText().equals(deviceType.getDeviceTypeDesc()))
 							{
 								childNode.addChild(deviceNode);
 								parentExist=true;
@@ -65,20 +67,20 @@ public class DataService {
 					}
 					if(!parentExist)
 					{
-						TreeNodeModel deviceTypeNode = new TreeNodeModel(device.getTDevicetype().getDeviceTypeDesc());
+						TreeNodeModel deviceTypeNode = new TreeNodeModel(deviceType.getDeviceTypeDesc());
 						deviceTypeNode.addChild(deviceNode);
 						substationNode.addChild(deviceTypeNode);
 					}
 				}
 
 				boolean parentExist=false;
+				String volInfo = substation.getTCurrentquality().getCurrentName()
+						+substation.getTVollevel().getVolLevel();//电压电流
 				if(companyNode.hasChildren())
 				{
-					for(TreeNodeModel childNode:companyNode.getChildren())//电压电流
+					for(TreeNodeModel childNode:companyNode.getChildren())
 					{
-						if(childNode.getText().equals(
-								substation.getTCurrentquality().getCurrentName()
-								+substation.getTVollevel().getVolLevel()))
+						if(childNode.getText().equals(volInfo))
 						{
 							childNode.addChild(substationNode);
 							parentExist=true;
@@ -88,8 +90,7 @@ public class DataService {
 				}
 				if(!parentExist)
 				{
-					TreeNodeModel volNode = new TreeNodeModel(substation.getTCurrentquality().getCurrentName()
-							+substation.getTVollevel().getVolLevel());
+					TreeNodeModel volNode = new TreeNodeModel(volInfo);
 					companyNode.addChild(volNode);
 					volNode.addChild(substationNode);
 				}
@@ -102,9 +103,8 @@ public class DataService {
 	public Object loadSubDevice(String deviceType,String deviceId)
 	{
 		List<ComponentModel> panelSubDevices = new ArrayList<ComponentModel>();
-		BtbSubstationdevice device = new BtbSubstationdeviceDAO().findById(Long.parseLong(deviceId));
-
-		for(BtbSubdevice subdevice:device.getBtbSubdevices())
+		List<BtbSubdevice> subDevices = new BtbSubdeviceDAO().findByProperty("btbSubstationdevice.substationDeviceId",Long.parseLong(deviceId));
+		for(BtbSubdevice subdevice:subDevices)
 		{
 			ComponentModel buttonSub = new ComponentModel();
 			buttonSub.setText(subdevice.getTDevicetype().getDeviceTypeDesc());

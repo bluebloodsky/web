@@ -79,7 +79,7 @@ public class BtbSubdeviceDAO extends BaseHibernateDAO {
 				+ propertyName + ", value: " + value );
 		try {
 			String queryString = "from BtbSubdevice as model where model."
-					+ propertyName + "= ?";
+					+ propertyName + "= ?" + " order by model.subDeviceId ";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();

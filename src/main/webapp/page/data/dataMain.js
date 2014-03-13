@@ -9,13 +9,14 @@ var showDetail = function(info){
 Ext.onReady(function(){	
       var deviceType = getParams("deviceType");
       var deviceId   = getParams("deviceId");
-	  var getSubData = function(id,panel){
-		  panel.removeAll();
-		  panel.add({
-			  text : id,
+	  var currentSubDeviceId = "0";
+	  var getPanelData = function(){
+		  dataPanel.removeAll();
+		  dataPanel.add({
+			  text : currentSubDeviceId,
 			  xtype: 'label'
 		  })
-	  }
+	  };
 	  var dataPanel = Ext.create('Ext.panel.Panel',{
 	      border : false
 	  });
@@ -24,20 +25,26 @@ Ext.onReady(function(){
 	  var viewport = Ext.create('Ext.container.Viewport',{
 		  items : [toolBar,dataPanel]    
 	  });
+
+	  var mask = new Ext.LoadMask(Ext.getBody(),{msg:"loading,please wait.."});
+      mask.show();
       myAjax('loadSubDevices.htm',{'deviceType':deviceType,'deviceId':deviceId},function(jsonData){      
 		  for(var i=0;i<jsonData.length;i++){
 		      toolBar.add({
 				  xtype: 'button',
 				  text : jsonData[i]['text'],
-				  click : getSubData(jsonData[i]['text'],dataPanel)
+				  subId : jsonData[i]['id'],
+				  listeners :{
+					  click:function(){
+						  currentSubDeviceId = this.subId;
+						  getPanelData();
+				      }
+				  }
 			  });
 		  }
-
-		// Ext.getCmp('sub').items = jsonData ;
-		// viewport.items.remove(Ext.getCmp('sub'));
-	    // viewport.add(toolBar);
-         console.log(Ext.getCmp('sub'));
+          mask.hide();
       });
+	  getPanelData();
      // var subDevices =
 	var tabs = Ext.create('Ext.tab.Panel',{
 		defaultType : 'panel' ,
@@ -147,5 +154,5 @@ Ext.onReady(function(){
 			        title : '套管' ,			       
 		      }]
 	});
-    dataPanel.add(tabs);
+   // dataPanel.add(tabs);
 })

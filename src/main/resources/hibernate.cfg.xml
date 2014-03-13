@@ -18,7 +18,7 @@
 			com.mysql.jdbc.Driver
 		</property>
 		<property name="hibernate.show_sql">
-			false
+			true
 		</property>
 		<property name="myeclipse.connection.profile">
 			intecomp_display

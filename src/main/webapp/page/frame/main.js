@@ -23,12 +23,6 @@ Ext.onReady(function(){
 		rootVisible :false ,
 		autoScroll  : true ,
 		store       : treeStore ,
-		listeners   : {
-			click   : function(node){				
-				console.log(node);
-				}
-//			}
-		}
 	});
 	var headPanel = Ext.create('Ext.Panel',{
 		region : 'north',
