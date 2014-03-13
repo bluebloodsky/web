@@ -29,7 +29,7 @@ Ext.onReady(function(){
 		      toolBar.add({
 				  xtype: 'button',
 				  text : jsonData[i]['text'],
-				  click : getSubData(jsonData[i]['id'],dataPanel)
+				  click : getSubData(jsonData[i]['text'],dataPanel)
 			  });
 		  }
 
