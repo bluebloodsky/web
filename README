@@ -1,0 +1,14 @@
+git add README
+git commit -m 'Modify'
+git remote git@github.com:bluebloodsky/web
+git push origin master
+
+git pull origin master
+
+
+@Transactional java中事务处理一般用于数据库操作，某一步执行失败后进行回滚，取消先前的操作。service中 insert|update|remove方法必须加上@Transactional
+
+@Service 标注业务层组件
+@Controller 标注控制层组件
+@Repository 标注数据访问组件，即dao组件
+@Component 泛指组件，不好归类时用

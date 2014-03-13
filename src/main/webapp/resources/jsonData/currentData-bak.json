@@ -1,0 +1,38 @@
+[{
+	id       : 'main' ,
+	children :[{
+	           id        : 'siml',
+	           items  : [{
+		                    id    :  'H2' ,
+			                desc  :  '氢气' ,
+			                value :  13.5 ,
+			                state : 'normal'
+		                   },
+		                   {
+		                    id    :  'C2H2',
+			                desc  :  '乙炔',
+			                value :  0     ,
+			                state : 'normal'
+		                   }] 
+	          },{
+	             id       : 'mmxn',
+				 items : [{
+				             id    : 'core',
+							 desc  : '铁心接地电流',
+							 value : 11.23 ,
+							 state : 'normal'
+				            }]
+	          }]
+},{
+	id       : 'ssbh',
+	children : [{
+	              id       : 'ssbha',
+				  items :[{
+				               id    : 'voltage',
+							   desc  : '电压',
+							   value : 60 ,
+							   state : 'normal'
+							}]
+	           }]
+
+}]

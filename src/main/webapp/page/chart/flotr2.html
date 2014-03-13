@@ -1,0 +1,101 @@
+<html>
+<head>
+<style type="text/css">
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+#container {
+	width: 600px;
+	height: 384px;
+	margin: 8px auto;
+}
+</style>
+</head>
+<body>
+	<div id="container"></div>
+	<!--[if IE]>
+    <script type="text/javascript" src="/static/lib/FlashCanvas/bin/flashcanvas.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../../resources/extjs/ext-all-debug.js"></script>
+	<script type="text/javascript" src="../../resources/js/flotr2.min.js"></script>
+	<script type="text/javascript" src="../../resources/js/flotr2.ie.min.js"></script>
+	<script type="text/javascript">
+	
+		var func = function(container, obj) {
+			
+			var info =[];
+
+			for(var i=0;i<obj.yfield.length;i++){
+				var data = [];
+				var label = obj.yfield[i];
+				for(var j = 0;j<obj.items.length;j++){
+					var dataTime = Ext.Date.parse(obj.items[j][obj.xfield], 'Y-m-d H:i:s');
+					data.push([dataTime, obj.items[j][label]])
+				}
+				info.push({'data':data,'label':label,lines : {show : true},points : {show : true}});
+			}
+
+			var graph = Flotr.draw(container, info, {
+				legend : {
+					position : 'nw'
+				},
+				mouse : {
+					track : true, // Enable mouse tracking
+					lineColor : 'purple',
+					relative : true,
+					position : 'ne',
+					sensibility : 1,
+					trackDecimals : 2,
+					trackFormatter : function(o) {						
+						return 'x = ' + Ext.Date.format(new Date(o.x),'Y-m-d H:i:s') + '\n, y = ' + o.y;
+					}
+				},
+				xaxis : {
+					mode : 'time',
+					labelsAngle: 45
+				},
+				yaxis : {
+					title : obj['ytitle'],
+					//labelsAngle: 45,
+					labelsAngle: 45,
+					titleAngle: 45   
+				},
+				grid : {
+					verticalLines : false,
+					backgroundColor : 'white'
+				},
+				crosshair : {
+					mode : 'xy'
+				}
+			});
+		};
+		var obj = {
+			    ytitle : 'value(ppm)',
+			    xfield: 'dataTime',
+			    yfield : ['H2','C2H2'],
+				items : [ {
+					dataTime : '2012-02-11 09:00:00',
+					C2H2     : 0.1 ,
+					H2       : 1.6
+				},{
+
+					dataTime : '2012-02-12 10:00:00',
+					C2H2     : 0.2,
+					H2       : 1.7
+				},{
+					dataTime : '2012-02-13 09:00:00',
+					C2H2     : 0.1 ,
+					H2       : 1.6
+				}, {
+
+					dataTime : '2012-02-14 09:00:00',
+					C2H2     : 0.2,
+					H2       : 1.7
+				} ]
+			};
+		func(document.getElementById("container"),obj);
+	</script>
+</body>
+</html>

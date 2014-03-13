@@ -1,0 +1,123 @@
+var showDetail = function(info){
+	Ext.MessageBox.alert('info',info);
+};
+Ext.onReady(function(){	
+	var tabs = Ext.create('Ext.tab.Panel',{
+		defaultType : 'panel' ,
+		items : [{
+			//class1
+			'title'   : '本体' ,
+			border    : false ,
+			'name'    : 'main',		
+			'items'   : [{
+				      //class2
+				      'id'         : 'baseInfo',
+				      title    : '基本信息' ,
+				      'layout' : 'column',
+				      bodyStyle: 'border-width:0 0 0 0',
+				      padding   : '0 0 20 0',
+				      defaultType : 'panel' ,
+				      items     : [{
+				    	  columnWidth:0.5,
+//				    	  bodyStyle: 'border-width:0 0 0 0;',
+				    	  border  : false ,
+				    	  items   : [{
+			                	xtype  : 'doTextPanel' ,
+			                	doDesc : '顶层油温' ,
+			                	doValue : '34℃' ,
+			                	doState: '正常'
+			                },{
+			                	xtype  : 'doTextPanel' ,
+			                	doDesc : '底层油温' ,
+			                	doValue : '34℃' ,
+			                	doState: '正常'
+			                }]
+				      },{
+				    	  columnWidth:0.5,
+//				    	  bodyStyle: 'border-width:0 0 0 0;',
+				    	  border  : false ,
+				    	  'items' : [{
+				    		    xtype  : 'doTextPanel' ,
+			                	doDesc : '寿命损失' ,
+			                	doValue : '10%' ,
+			                	doName  : 'lifeLose' ,
+			                	doState: '正常' ,
+			                	doUrl  : '详情',
+				    	  }]
+				      }]
+				     
+			         },{
+			        	 //class2
+				         id    : 'siml',
+				         title    : '油色谱' ,
+					     bodyStyle: 'border-width:0 0 0 0',
+					     padding   : '5 0 20 0',
+				         items : [{
+				        	        //class3
+
+					         border  : false ,
+					                defaultType : 'label' ,
+					                items       : [{
+						                                text : '油色谱：',
+					                               },{
+						                                html : '[<a onclick = "showDetail(\'油色谱详情\')" >详情</a>]',
+					                              },{
+						                                text : '[三比值：过热故障]',
+					                              }]
+			                      },{
+			                    	  //class3
+			                    	  xtype     : 'grid'  ,
+			                    	  columns   : [{
+			                    		                text     : '监测时间',
+			                    		                dataIndex: 'dataTime'
+			                    	              },{
+			                    	            	    text     : 'C2H2',
+			                    		                dataIndex: 'C2H2'
+			                    	              },{
+			                    	            	    text     : 'H2',
+			                    		                dataIndex: 'H2'
+			                    	              },{
+			                    	            	    text     : '分析详情',
+			                    		                dataIndex: 'detail'
+			                    	              }],	
+			                    	  store      : {
+			                    		                fields   : ['dataTime','C2H2','H2','detail'] ,			                    		                
+			                    	                    data     : {'items':[{
+			                    		                                           'dataTime' : '2012-2-11 09:00:00',			                    		                                           
+			                    		                                           'C2H2'     : ['0','1'],
+			                    		                                           'H2'       : ['45.7','2'],
+			                    		                                           'detail'   : '<a  onclick = "showDetail(\'分析结果\')">详情</a>'
+			                    	                                        },{
+			                    	                                        	
+			 			                    		                               'dataTime' : '2012-2-12 09:00:00',
+			 			                    		                               'C2H2'     : '0',
+			 			                    		                               'H2'       : '45.7',
+			 			                    		                               'detail'   : '<a  onclick = "showDetail(\'分析结果\')">详情</a>'			 			                    	                                       
+			                    	                                        }]
+			                                                        },
+			                                            proxy     : {
+			                                            	           type        : 'memory',
+			                                            	           reader      : {
+			                                            	        	              type : 'json',
+			                                            	        	              root : 'items',
+			                                            	                         }
+			                                                         }
+			                    	              }
+			            	      },{
+			            	    	  //class3
+			            	    	  xtype : 'label',
+			            	    	  text  : '*气体组分含量数据单位：ppm'
+			            	      }]
+			       }]
+		      },{
+			        title : '套管' ,			       
+		      }]
+	});
+	var view =  Ext.create('Ext.container.Viewport',{
+		layout : 'fit' ,
+		renderTo : Ext.getBody() ,
+		items    : [tabs]
+
+	});
+
+})

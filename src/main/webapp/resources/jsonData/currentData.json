@@ -1,0 +1,76 @@
+[{
+	id       : 'main' ,
+	children :[{
+	           id        : 'baseInfo' ,
+			   type      : 'text'     ,
+			   items  : [{
+			                  id    : '' ,
+							  desc  : '顶层油温' ,
+							  value : 34 ,
+							  unit  : '℃' ,
+							  state : '油温过高' 
+			               },{
+			                  id    : '' ,
+							  desc  : '底层油温' ,
+							  value : 34 ,
+							  unit  : '℃' ,
+							  state : '正常' 
+			               },{
+			                  id    : '' ,
+							  desc  : '底层油压' ,
+							  value : 45 ,
+							  unit  : '' ,
+							  state : '正常' 
+			               },{
+						      id     : '' ,
+							  desc   : '变压器热状态评估模型' ,
+							  url    : ['详情','']
+						   }]
+	           },{
+	           id        : 'siml',
+			   type      : 'grid',
+			   desc      : '油色谱',
+			   url       : ['详情',''],
+			   state     : '三比值：过热故障',
+			   columns   : ['监测时间','H2'，'C2H2’,'分析详情'],
+	           items  :  [{[{type: 'text',
+			                 value:'2014-01-02'},{
+							 type : 'text',
+							 value: '45.7'},{
+							 type : 'text' ,
+							 value : '0'},{
+							 type  : 'url' ,
+							 value : ''
+							 }] 
+						   },{[{type: 'text',
+			                 value:'2014-02-02'},{
+							 type : 'text',
+							 value: '45.7'},{
+							 type : 'text' ,
+							 value : '0'},{
+							 type  : 'url' ,
+							 value : ''
+							 }]}
+							] 
+	          },{
+	             id       : 'mmxn',
+				 items : [{
+				             id    : 'core',
+							 desc  : '铁心接地电流',
+							 value : 11.23 ,
+							 state : 'normal'
+				            }]
+	          }]
+},{
+	id       : 'ssbh',
+	children : [{
+	              id       : 'ssbha',
+				  items :[{
+				               id    : 'voltage',
+							   desc  : '电压',
+							   value : 60 ,
+							   state : 'normal'
+							}]
+	           }]
+
+}]

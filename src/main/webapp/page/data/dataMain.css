@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+.topPanel{
+	bodyPadding: 20 0 30 0;
+	padding: 20 0 30 0;
+	height :200px;
+}
+label{
+	padding-right :20;
+}
+.span{
+	font-weight : bold;
+	font-size   : 14  ;
+	padding     : 5 10 ;
+}
