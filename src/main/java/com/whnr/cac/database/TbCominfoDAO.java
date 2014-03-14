@@ -101,7 +101,7 @@ public class TbCominfoDAO extends BaseHibernateDAO {
 	public List findAll() {
 		log.debug("finding all TbCominfo instances");
 		try {
-			String queryString = "from TbCominfo";
+			String queryString = "from TbCominfo order by comInfoId asc";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {

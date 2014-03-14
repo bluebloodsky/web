@@ -9,12 +9,15 @@ var showDetail = function(info){
 Ext.onReady(function(){	
       var deviceType = getParams("deviceType");
       var deviceId   = getParams("deviceId");
-	  var currentSubDeviceId = "0";
+	  var currentSubDeviceId = "";
 	  var getPanelData = function(){
-		  dataPanel.removeAll();
-		  dataPanel.add({
-			  text : currentSubDeviceId,
-			  xtype: 'label'
+		  myAjax('loadSubDeviceData.htm',{
+			  subDeviceId : currentSubDeviceId,
+			  deviceId      : deviceId
+		  },function(jsonData){
+		      dataPanel.removeAll();
+		      dataPanel.add(jsonData);
+		  
 		  })
 	  };
 	  var dataPanel = Ext.create('Ext.panel.Panel',{
@@ -31,9 +34,10 @@ Ext.onReady(function(){
       myAjax('loadSubDevices.htm',{'deviceType':deviceType,'deviceId':deviceId},function(jsonData){      
 		  for(var i=0;i<jsonData.length;i++){
 		      toolBar.add({
-				  xtype: 'button',
-				  text : jsonData[i]['text'],
+				  xtype : 'button',
+				  text  : jsonData[i]['text'],
 				  subId : jsonData[i]['id'],
+				  name  : jsonData[i]['name'],
 				  listeners :{
 					  click:function(){
 						  currentSubDeviceId = this.subId;

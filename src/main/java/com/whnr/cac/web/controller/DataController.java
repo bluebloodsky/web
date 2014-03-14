@@ -34,7 +34,7 @@ public class DataController extends BaseController{
 	}
 	
 	@RequestMapping("/loadSubDevices.htm")
-	public void LoadBasicData(String deviceType,String deviceId,HttpServletRequest request, HttpServletResponse response)
+	public void loadSubDevices(String deviceType,String deviceId,HttpServletRequest request, HttpServletResponse response)
 	{
 		String result = "";
 		try{
@@ -46,5 +46,23 @@ public class DataController extends BaseController{
 //         String jsonString="[{'id':'01','text':'系统设置','leaf':false},{'id':'02','text':'全局配置','leaf':false},{'id':'03','text':'商户管理','leaf':false}]";
 			doResponse(response, result);
 		}
+	}
+
+	@RequestMapping("/loadSubDeviceData.htm")
+   public void loadSubDeviceData(String subDeviceId,String deviceId,HttpServletRequest request, HttpServletResponse response)
+	{
+		String result = "";
+		try{
+			Object panelsubDeviceData=dataService.loadSubDeviceData(subDeviceId, deviceId);
+			result = WebUtil.toJsonString(panelsubDeviceData);
+			System.out.println(result);
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		} finally {
+//         String jsonString="[{'id':'01','text':'系统设置','leaf':false},{'id':'02','text':'全局配置','leaf':false},{'id':'03','text':'商户管理','leaf':false}]";
+			doResponse(response, result);
+		}
+		
 	}
 }

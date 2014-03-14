@@ -14,7 +14,14 @@ public class ComponentModel {
 	private String xtype;
 	private String href;
 	private String html;
+	private float columnWidth;
 	
+	public float getColumnWidth() {
+		return columnWidth;
+	}
+	public void setColumnWidth(float columnWidth) {
+		this.columnWidth = columnWidth;
+	}
 	public String getHref() {
 		return href;
 	}

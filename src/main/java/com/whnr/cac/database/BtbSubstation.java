@@ -3,6 +3,7 @@ package com.whnr.cac.database;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -202,6 +204,7 @@ public class BtbSubstation implements java.io.Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "btbSubstation")
+	@OrderBy(value="substationDeviceId")
 	public Set<BtbSubstationdevice> getBtbSubstationdevices() {
 		return this.btbSubstationdevices;
 	}
